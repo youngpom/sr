@@ -1,0 +1,265 @@
+﻿body 
+{
+	font-size: 9pt;
+    COLOR: #000000;
+	font-family: ""굴림",Gulim,돋움",Dotum,AppleGothic,Sans-serif;
+}
+
+INPUT.text
+{
+	font-size: 12px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 4px;
+	height:16px;
+	border: solid 1px #ffffff;
+}
+
+.btn_search
+{
+    BACKGROUND-IMAGE: url(./image/button_rec.gif);
+    FONT-WEIGHT: 700;
+    COLOR: #000000;
+    padding-top: 5px;
+    height: 22px;
+    width: 53px;
+    border:0;
+    border-spacing:40px;
+	text-align: center;
+    vertical-align:bottom;
+}
+.listTable table
+{
+
+}
+.listTable th
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+	font-weight: bold;
+	background-color: #cedab5;
+	height: 25px;
+	border-top: solid 1px #84af4c;
+	border-bottom: solid 1px #84af4c;
+	border-left: solid 1px #bccc9d;
+	border-right: solid 1px #bccc9d;
+	color: #000000;
+}
+
+.listTable td
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: left;
+	font-weight: normal;
+	border-top: solid 1px #84af4c;
+	border-bottom: solid 1px #84af4c;
+	border-left: solid 1px #bccc9d;
+	border-right: solid 1px #bccc9d;
+	height: 25px;
+}
+
+.trMouseOver
+{
+	cursor:hand;
+	background-color:#a4c177
+;
+}
+
+.trMouseOut
+{
+	cursor:normal;
+	background-color:#FFFFFF;
+}
+
+.trNow
+{
+	cursor:normal;
+	background-color:#ebe2b3;
+}
+
+.bullet_title
+{
+    BACKGROUND-IMAGE: url(./image/dot_bullet.GIF);
+    BACKGROUND-REPEAT: no-repeat;
+    MARGIN-TOP: 5px;
+    PADDING-TOP: 4px;    
+    PADDING-LEFT: 25px;
+    PADDING-BOTTOM: 15px;
+    COLOR: #1571bc;
+    CLEAR: both;
+    FONT-SIZE: 15px;
+    FONT-WEIGHT: bold;
+    TEXT-DECORATION: none;
+}
+
+.action_table
+{
+    border: solid 1px #eae0ba;	
+    vertical-align: middle;
+	 border-spacing:0px;
+	 border:1;
+    border-collapse:collapse;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    table-layout : fixed;
+}
+
+.action_td_lbl_base
+{
+    background-color: #D8D8D8;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    FONT-WEIGHT: bold;
+    height:23px;
+    COLOR: #505050;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568;
+    vertical-align: middle;
+    table-layout : fixed;
+}
+.action_td_lbl
+{
+    background-image : none;
+    background-color: #D8D8D8;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    FONT-WEIGHT: bold;
+    height:23px;
+    COLOR: #000000;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568;
+    vertical-align: middle;
+    table-layout : fixed;
+}
+
+.action_td_in
+{
+    background-color: #FFFFFF;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    height: 23px;
+    vertical-align: middle;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568;
+    table-layout : fixed;
+}
+
+.button_table
+{	
+	background-color: #ffffff;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+	font-weight: bold;
+        table-layout : fixed;
+
+        border:0;
+        outline:0;
+       
+	height: 25px;
+}
+
+
+.result_table
+{
+	border: solid 1px #bccc9d;
+        vertical-align: middle;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.desc_table
+{	
+	text-align : left;
+    vertical-align: middle;
+	background-color: #ebe5df;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	font-weight:normal;
+    border-spacing:0px;
+    border-collapse:collapse;
+	border: solid 1px #ebe5df;
+	height: 25px;
+}
+
+
+.menuTable
+{
+    
+        COLOR: #000000;
+        font-weight : 900;
+        font-size : 15px;
+	padding-bottom: 10px;
+    MARGIN-bottom: 10px;
+}
+A
+{
+	font-family: "굴림",Gulim,AppleGothic,Sans-serif;
+	LINE-HEIGHT: 150%;
+    COLOR: #000000;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR:#000000;
+	LINE-HEIGHT: 150%;
+    TEXT-DECORATION: underline
+}
+A:focus
+{
+    COLOR:#000000;
+	LINE-HEIGHT: 150%;
+    TEXT-DECORATION: underline
+}
+
+.textbold
+{
+	font-size: 12px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 4px;
+	height:16px;
+	border: solid 1px #CFCFCF;
+	font-weight: bold;
+	color: Blue;
+}
