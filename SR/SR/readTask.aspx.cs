@@ -56,7 +56,7 @@ public partial class tasklista : common
 
         if (txtStartTime.Text == "")
             //txtStartTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(DateTime.Now.Year + "-01-01"));
-            txtStartTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now.AddDays(-2));
+            txtStartTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now.AddDays(-3));
 
         if (txtEndTime.Text == "")
             txtEndTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
@@ -294,14 +294,10 @@ public partial class tasklista : common
         if (IsAdmin() == false)
             sql = sql + "and SYSNM_COMCD.COMCD = '501'";
 
-        sql = sql + "  ORDER BY REGDT DESC";
-		
+        sql = sql + "  ORDER BY REQDT DESC";
 		
 		//string sql1 = 
-						
         //Response.Write(sql);
-		
-		
 		
         DataTable dt = GetDataTable(sql);
         if (dt.Rows.Count >= 0)
