@@ -1093,8 +1093,8 @@ public partial class teskedit : common
         if (!string.IsNullOrEmpty(responseFileRealName) && responseFileRealName != "")
             deleteFile(responseFileRealName);
 
-        string attachsql = "delete from PJT_ATTFILE where CONTABLE = 'PJT_TASK' AND CONSEQ = '" + hdnTaskSeq.Value + "'";
-        Response.Write(attachsql);
+        //string attachsql = "delete from PJT_ATTFILE where CONTABLE = 'PJT_TASK' AND CONSEQ = '" + hdnTaskSeq.Value + "'";
+        //Response.Write(attachsql);
         cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandType = CommandType.Text;

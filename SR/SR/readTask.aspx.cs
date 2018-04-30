@@ -416,8 +416,7 @@ public partial class tasklista : common
             e.Row.Cells[27].Visible = false; //개발자
             e.Row.Cells[28].Visible = false; //파일
             e.Row.Cells[29].Visible = false; //시스템
-			
-			
+						
 			e.Row.Cells[30].Visible = false; // 긴급사항
 			e.Row.Cells[31].Visible = false;
 			e.Row.Cells[32].Visible = false;
