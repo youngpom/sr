@@ -188,7 +188,7 @@ public partial class tasklista : common
     public void MakeGridview(string developer, string reqdept, string taskstep, string requser, string startdate, string enddate, bool mydata, bool ingdata, string rcptemp, string devrmk, string gubun_1, string docno,bool imtdata,string programcopy,bool radioall,bool radiofirst,bool radiocom, bool radioadd,string userid,string sysnm,string search_reqrmk,string search_reqcontent)
     {
         string sql = @"SELECT TASKSEQ , TASKID,docno as DOCNO, TASKSTEP_COMCD.COMCDNM as TASKSTEP, REQTYPE_COMCD.COMCDNM as REQTYPE, REQTOOL_COMCD.COMCDNM as REQTOOL
-                            , REQDT, REQDEPT_COMCD.COMCDNM as REQDEPTNM,  REQRMK, PJT_REQEMP.REQEMPNM, RCPEMP_DEVEMP.DEVEMPNM as RCPEMPNM
+                            , REQDT, REQDEPT_COMCD.COMCDNM as REQDEPTNM,  REQRMK, REQEMP, RCPEMP_DEVEMP.DEVEMPNM as RCPEMPNM
 		                    , REQEMPS, REQDUEDT
 		                    , TASKPROG, DOTYPE_COMCD.COMCDNM as DOTYPE, STEXDT, STDT, SPEXDT, SPDT
 		                    , DEVEMP_DEVEMP.DEVEMPNM as DEVEMPNM, DEVEMPS, DEVRMK
@@ -203,7 +203,6 @@ public partial class tasklista : common
 		                     PJT_COMCD AS REQTOOL_COMCD on PJT_TASK.REQTOOL = REQTOOL_COMCD.COMCD and REQTOOL_COMCD.UPCD = '60' left join
 		                     PJT_COMCD AS DOTYPE_COMCD on PJT_TASK.DOTYPE = DOTYPE_COMCD.COMCD and DOTYPE_COMCD.UPCD = '80' left join
 		                     PJT_COMCD AS TASKSTEP_COMCD on PJT_TASK.TASKSTEP = TASKSTEP_COMCD.COMCD and TASKSTEP_COMCD.UPCD = '40' left join
-		                     PJT_REQEMP on PJT_TASK.REQEMP = PJT_REQEMP.REQEMPSEQ left join
 		                     PJT_DEVEMP AS RCPEMP_DEVEMP on PJT_TASK.RCPTEMP = RCPEMP_DEVEMP.DEVEMPID left join
                              PJT_ATTFILE AS ATTFILE_CONSEQ on PJT_TASK.TASKSEQ = ATTFILE_CONSEQ.CONSEQ left join
 		                     PJT_DEVEMP AS DEVEMP_DEVEMP on PJT_TASK.DEVEMP = DEVEMP_DEVEMP.DEVEMPID
@@ -246,6 +245,7 @@ public partial class tasklista : common
         // else
         //	  sql = sql + " and PJT_TASK.TASKSTEP = '" + taskstep + "'";
 
+        // 요청자
         if (requser != "")
             sql = sql + " and PJT_TASK.REQEMP = '" + requser + "'";
       //  if (startdate != "")
@@ -265,22 +265,25 @@ public partial class tasklista : common
         if (ingdata == true)
             sql = sql + " and (TASKSTEP_COMCD.COMCDNM != '처리완료' or TASKSTEP_COMCD.COMCDNM is NULL)";
 
+        // 요청자 이름으로 검색
         if (rcptemp != "")
             sql = sql + " and PJT_TASK.RCPTEMP IN (SELECT A.DEVEMPID FROM PJT_DEVEMP A WHERE DEVEMPNM='" + rcptemp + "')";
+
         if (devrmk != "")
             sql = sql + " and PJT_TASK.DEVRMK like '%" + devrmk + "%'";
         if (gubun_1 != "" && gubun_1 != "전체")
             sql = sql + " and PJT_TASK.DOTYPE = '" + gubun_1 + "'";
 
+        // 문서번호
         if (docno != "")
             sql = sql + " and PJT_TASK.DOCNO like '%" + docno + "'";
-		
-		if(imtdata==true)
+
+        // 내 것만 보기
+        if (imtdata==true)
 		    sql = sql + " and PJT_TASK.CheckIpt =  '1'";
 
         // 전체 요청 유형 선택 시 요청유형 조건 없음
         //if (radioall==true)
-
         if (radiofirst==true)
             sql = sql + " and PJT_TASK.RadFirstReq =  '1' ";
 		if (radiocom==true)

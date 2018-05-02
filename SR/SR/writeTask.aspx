@@ -47,7 +47,7 @@
                     document.getElementById("txtProcessBy").value = document.getElementById("hdnLoginNm").value
                     document.getElementById("hdnProcessBy").value = document.getElementById("hdnLoginId").value
                 }
-
+                
                 //진척률 빈값이면 100%로 셋팅
                 if (document.getElementById("txtTaskProgress").value == "")
                     document.getElementById("txtTaskProgress").value = "100%";
@@ -62,7 +62,7 @@
 
         function callSearchReqemp() {
             if (event.keyCode == 13) {
-                SearchReqempCheckOne('form1.hdnRequestBy.value', 'form1.txtRequestBy.value', form1.txtRequestBy.value);
+                SearchDevempCheckOne('form1.hdnRequestBy.value', 'form1.txtRequestBy.value', form1.txtRequestBy.value);
             }
         }
 
@@ -179,7 +179,7 @@
                 </td>
                 <td class="action_td_in" width="285">
                     <asp:TextBox ID="txtRequestBy" runat="server" onKeyPress="javascript:callSearchReqemp();"></asp:TextBox>
-                    <asp:ImageButton ID="btnRequestBy" runat="server" ImageUrl="image/serach_.jpg" ImageAlign="AbsMiddle" OnClientClick="javascript:SearchReqemp('form1.hdnRequestBy.value','form1.txtRequestBy.value');" />
+                    <asp:ImageButton ID="btnRequestBy" runat="server" ImageUrl="image/serach_.jpg" ImageAlign="AbsMiddle" OnClientClick="javascript:SearchDevemp('form1.hdnRequestBy.value','form1.txtRequestBy.value');" />
                     <asp:HiddenField ID="hdnRequestBy" runat="server" />
                     <asp:Label ID="viewRequestBy" runat="server" Text="" Visible="false"></asp:Label>
                 </td>

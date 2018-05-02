@@ -100,11 +100,16 @@ public partial class teskedit : common
             {
                 txtRequestDate.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
             }
+
+            // 접수자, 요청자 정보를 로그인 한 사용자 정보로 입력
             txtReceiptBy.Text = Request.Cookies["UserSettings"]["USERNM"];
             hdnReceiptBy.Value = Request.Cookies["UserSettings"]["USERID"];
 
-           // txtRequestBy.Text = Request.Cookies["UserSettings"]["USERNM"];
-          //  hdnRequestBy.Value = Request.Cookies["UserSettings"]["USERID"];
+            txtRequestBy.Text = Request.Cookies["UserSettings"]["USERNM"];
+            hdnRequestBy.Value = Request.Cookies["UserSettings"]["USERID"];
+
+            // txtRequestBy.Text = Request.Cookies["UserSettings"]["USERNM"];
+            //  hdnRequestBy.Value = Request.Cookies["UserSettings"]["USERID"];
 
             if (txtRequestDueDate.Text == "")
             {
@@ -193,13 +198,12 @@ public partial class teskedit : common
                     cmd.CommandType = CommandType.Text;
 
                     string tasksql = @"SELECT TASKSEQ, TASKID, SYSNM, REQTYPE, REQTOOL, REQDT, REQDEPTSEQ, REQDEPT_COMCD.COMCDNM as REQDEPTNM
-                                            , REQEMP, PJT_REQEMP.REQEMPNM, RCPTEMP, RCPEMP_DEVEMP.DEVEMPNM as RCPEMPNM
+                                            , REQEMP, (select devempnm from pjt_devemp where pjt_devemp.devempid=reqemp) as REQEMPNM, RCPTEMP, RCPEMP_DEVEMP.DEVEMPNM as RCPEMPNM
                                             , REQEMPS, REQDUEDT, REQRMK
                                             , DOTYPE, DEVEMP, DEVEMP_DEVEMP.DEVEMPNM AS DEVEMPNM, DEVEMPS, TASKSTEP, TASKPROG, STEXDT, STDT, SPEXDT, SPDT, DEVRMK
 		                                    , PJT_TASK.REGEMP, PJT_TASK.CHGEMP, PJT_TASK.REGDT, PJT_TASK.CHGDT 
                                             , DOCNO , REQRMKCOPY,CheckIpt,RadFirstReq,RadComReq,RadAddReq,PROGRAMCOPY,NOTICE,DEVTOOL
                                          FROM PJT_TASK left join
-		                                      PJT_REQEMP on PJT_TASK.REQEMP = PJT_REQEMP.REQEMPSEQ left join
 		                                      PJT_DEVEMP AS RCPEMP_DEVEMP on PJT_TASK.RCPTEMP = RCPEMP_DEVEMP.DEVEMPID left join
 		                                      PJT_DEVEMP AS DEVEMP_DEVEMP on PJT_TASK.DEVEMP = DEVEMP_DEVEMP.DEVEMPID left join
 		                                      PJT_COMCD AS REQDEPT_COMCD on PJT_TASK.REQDEPTSEQ = REQDEPT_COMCD.COMCD and REQDEPT_COMCD.UPCD = '30'
@@ -233,6 +237,11 @@ public partial class teskedit : common
                         viewRequestBy.Text = reader["REQEMPNM"].ToString(); //요청자
                         hdnReceiptBy.Value = reader["RCPTEMP"].ToString(); //접수자
                         txtReceiptBy.Text = reader["RCPEMPNM"].ToString(); //접수자
+                        if (IsCImember() == false)
+                        {
+                            txtReceiptBy.ReadOnly = true;
+                            btnReceiptBy.Enabled = false;
+                        }
                         viewReceiptBy.Text = reader["RCPEMPNM"].ToString(); //접수자
                         txtRequestBys.Text = reader["REQEMPS"].ToString(); //요청관련자
                         viewRequestBys.Text = reader["REQEMPS"].ToString(); //요청관련자
@@ -395,11 +404,15 @@ public partial class teskedit : common
             }
             else
             {
-                // 정보화실 멤버가 아닐 경우 "운영"목록으로 초기값 선택 및 변경 금지
+                // 정보화실 멤버가 아닐 경우 
                 if (IsCImember() == false)
                 {
+                    // 시스템 구분 "운영"목록으로 초기값 선택 및 변경 금지
                     cboGnlSystemName.SelectedIndex = 8;
                     cboGnlSystemName.Enabled = false;
+                    // 접수자 변경 금지
+                    txtReceiptBy.ReadOnly = true;
+                    btnReceiptBy.Enabled = false;
                 }
 
                 /*
@@ -408,7 +421,7 @@ public partial class teskedit : common
                     cboGnlSystemName.SelectedIndex = Convert.ToInt32(tempSystemName);
                 }
                 */
-                
+
                 if (tempReqTool != "")
                 {
                     cboGnlReqTool.SelectedIndex = Convert.ToInt32(tempReqTool);

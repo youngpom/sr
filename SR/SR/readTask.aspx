@@ -18,7 +18,7 @@
         }
         function callSearchReqemp() {
             if (event.keyCode == 13) {
-                SearchReqempCheckOne('form1.hdnRequestBy.value', 'form1.txtRequestBy.value', form1.txtRequestBy.value);
+                SearchDevempCheckOne('form1.hdnRequestBy.value', 'form1.txtRequestBy.value', form1.txtRequestBy.value);
             }
 
         }
@@ -144,7 +144,7 @@
                 </td>
                 <td class="action_td_in" width="200px">
                     <asp:TextBox ID="txtRequestBy" runat="server" Width="100px" onKeyPress="javascript:callSearchReqemp();"></asp:TextBox>
-                    <asp:ImageButton ID="btnRequestBy" runat="server" ImageUrl="image/serach_.jpg" ImageAlign="AbsMiddle" OnClientClick="javascript:SearchReqemp('form1.hdnRequestBy.value','form1.txtRequestBy.value', form1.txtRequestBy.value);" />
+                    <asp:ImageButton ID="btnRequestBy" runat="server" ImageUrl="image/serach_.jpg" ImageAlign="AbsMiddle" OnClientClick="javascript:SearchDevemp('form1.hdnRequestBy.value','form1.txtRequestBy.value', form1.txtRequestBy.value);" />
                     <asp:HiddenField ID="hdnRequestBy" runat="server" />
                 </td>
                 <td class="action_td_lbl" width="100px">

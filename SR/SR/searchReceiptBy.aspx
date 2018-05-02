@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>개발자조회</title>
+    <title>사용자 조회</title>
     <script language='javascript' src="common.js" type="text/javascript"></script>
     <link href="common.css" type="text/css" rel="stylesheet"/>  
     <script language='javascript' type="text/javascript">
@@ -19,13 +19,13 @@
 <body>
     <form id="form1" runat="server">
     <div  class="bullet_title" >
-    개발자조회
+    사용자조회
     </div>
     <table width="610" style="margin-right: 0px">
         <tr>
             <td colspan="4" align="center">
                 <asp:DropDownList ID="cboSearch" runat="server">
-                    <asp:ListItem Value="DevempNm">개발자명</asp:ListItem>
+                    <asp:ListItem Value="DevempNm">사용자명</asp:ListItem>
                 </asp:DropDownList>
 &nbsp;
                 <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
@@ -34,7 +34,7 @@
             &nbsp;&nbsp;
                 <asp:Button ID="btnDevempIdEmpty" runat="server"  
                     onClientclick="btnDevempIdEmpty_Click" onclick="btnDevempIdEmpty_Click" 
-                    Text="개발자 미지정" />
+                    Text="사용자 미지정" />
             </td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@
             <td>
                 <asp:HiddenField ID="hdnDevempIdQuery" runat="server" />
                 <asp:HiddenField ID="hdnDevempNmQuery" runat="server" />
-                <asp:Label ID="Label1" runat="server" Text="* 해당개발자를 더블클릭하세요"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="* 해당사용자를 더블클릭하세요"></asp:Label>
             </td>
         </tr>
     </table>
