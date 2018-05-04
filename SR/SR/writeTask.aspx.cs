@@ -964,9 +964,6 @@ public partial class teskedit : common
 
                // sql = sql + " , '" + prcessContent.Trim().Replace("'", "™") + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE(),
                //'"+requestContent1.Trim().Replace("'", "™")+@" ',' " +abcd    FROM PJT_TASK;";
-                                
-
-
 		
 		cmd.CommandType = CommandType.Text;
                 //Response.Write(sql);

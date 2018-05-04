@@ -85,11 +85,9 @@ public class common : System.Web.UI.Page
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
             string userID = string.Empty;
-
-
+            
             userID = Request.Cookies["UserSettings"]["USERID"];
-
-
+            
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             conn.Open();
