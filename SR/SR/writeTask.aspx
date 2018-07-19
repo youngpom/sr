@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 
-    <title>단위업무 등록/수정</title>
+    <title>전산요청 등록/수정</title>
     <script type="text/javascript" language='javascript' src="common.js"></script>
     <link href="./common.css?ver=1" type="text/css" rel="stylesheet" />
     <script type="text/javascript" language="javascript">
@@ -54,34 +54,23 @@
             }
         }
 
-        // 부서검색
         function callSearchDept() {
             if (event.keyCode == 13) {
                 SearchDeptCheckOne('form1.hdnRequestDept.value', 'form1.txtRequestDept.value', form1.txtRequestDept.value);
             }
         }
 
-        // 요청자 검색
         function callSearchReqemp() {
             if (event.keyCode == 13) {
                 SearchDevempCheckOne('form1.hdnRequestBy.value', 'form1.txtRequestBy.value', form1.txtRequestBy.value);
             }
         }
 
-        // 처리자 검색
         function callSearchDevemp() {
             if (event.keyCode == 13) {
                 SearchDevempCheckOne('form1.hdnProcessBy.value', 'form1.txtProcessBy.value', form1.txtProcessBy.value);
             }
         }
-
-        // 접수자 검색
-        function callSearchRcptemp() {
-            if (event.keyCode == 13) {
-                SearchDevempCheckOne('form1.hdnReceiptBy.value', 'form1.txtReceiptBy.value', form1.txtReceiptBy.value);
-            }
-        }
-
 
         function openTask() {
             document.forms["writeform"].hdnTaskStep.value = document.forms["form1"].searchTaskStep.value;
@@ -123,7 +112,7 @@
     <form id="form1" runat="server">
         <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ToolkitScriptManager>
         <br />
-        <div class="bullet_title">단위업무 관리</div>
+        <div class="bullet_title">전산요청 등록</div>
 
         <table class="action_table" id="TABLE1" width="900px">
             <tr>
@@ -198,7 +187,7 @@
                     <asp:Label ID="lblReceiptBy" runat="server" Text="접수자"></asp:Label>
                 </td>
                 <td class="action_td_in" width="285">
-                    <asp:TextBox ID="txtReceiptBy" runat="server" onKeyPress="javascript:callSearchRcptemp();"></asp:TextBox>
+                    <asp:TextBox ID="txtReceiptBy" runat="server"></asp:TextBox>
                     <asp:ImageButton ID="btnReceiptBy" runat="server" ImageUrl="image/serach_.jpg" ImageAlign="AbsMiddle" OnClientClick="javascript:SearchDevemp('form1.hdnReceiptBy.value','form1.txtReceiptBy.value');" />
                     <asp:HiddenField ID="hdnReceiptBy" runat="server" />
                     <asp:Label ID="viewReceiptBy" runat="server" Text="" Visible="false"></asp:Label>
@@ -206,7 +195,7 @@
             </tr>
             <tr>
                 <td class="action_td_lbl" width="135">
-                    <asp:Label ID="lblRequestBys" runat="server" Text="업무담당자"></asp:Label>
+                    <asp:Label ID="lblRequestBys" runat="server" Text="전산담당자"></asp:Label>
                 </td>
                 <td class="action_td_in" width="285">
                     <asp:TextBox ID="txtRequestBys" runat="server"></asp:TextBox>
@@ -228,7 +217,7 @@
                     <asp:Label ID="lblRequestContent" runat="server" Text="제목"></asp:Label>
                 </td>
                 <td class="action_td_in" width="735" colspan="3">
-                    <asp:TextBox ID="txtRequestContent" runat="server" Width="500" MaxLength="200"></asp:TextBox>
+                    <asp:TextBox ID="txtRequestContent" runat="server" Width="500" maxlength="50"></asp:TextBox>
                     <asp:Label ID="viewRequestContent" runat="server" Text="" Visible="false"></asp:Label>
                     <asp:CheckBox ID="chknotice" runat="server" Text="공지사항" Width="70"></asp:CheckBox>
                     <asp:CheckBox ID="chkImPorTant" runat="server" Style="text-align: center" ForeColor="Red" Text="긴급(환자직접영향)" Width="150"></asp:CheckBox>
@@ -240,9 +229,10 @@
                     <asp:Label ID="lblRequestContent2" runat="server" Text="적용 프로그램"></asp:Label>
                 </td>
                 <td class="action_td_in" width="735" colspan="3">
-                    <asp:TextBox ID="txtRequestContent2" runat="server" Width="670" MaxLength="30"></asp:TextBox>
+                    <asp:TextBox ID="txtRequestContent2" runat="server" Width="670" maxlength="60"></asp:TextBox>
                     <asp:Label ID="viewRequestContent2" runat="server" Text="" Visible="false"></asp:Label>
                     <asp:HiddenField ID="hdnIpt" runat="server" />
+
                 </td>
             </tr>
             <tr>
@@ -250,7 +240,7 @@
                     <asp:Label ID="lblRequestContent1" runat="server" Text="요청사항"></asp:Label>
                 </td>
                 <td class="action_td_in" width="735" colspan="3">
-                    <asp:TextBox ID="txtRequestContent1" runat="server" TextMode="MultiLine" Width="720" Rows="10" MaxLength="1000"></asp:TextBox>
+                    <asp:TextBox ID="txtRequestContent1" runat="server" TextMode="MultiLine" Width="720" Rows="10" maxlength="2000"></asp:TextBox>
                     <asp:Label ID="viewRequestContent1" runat="server" Text="" Visible="false"></asp:Label>
                     <br />
                     <asp:FileUpload ID="uploadRequestContent" runat="server" Width="670" />
@@ -385,8 +375,7 @@
                     <asp:Label ID="lblProcessBys" runat="server" Text="처리관련자"></asp:Label>
                 </td>
                 <td colspan="3" class="action_td_in" width="735px">
-                    <asp:TextBox ID="txtProcessBys" runat="server" Width="720" MaxLength="30"></asp:TextBox>
-                    <asp:Label ID="viewProcessBys" runat="server" Text="" Visible="false"></asp:Label>
+                    <asp:TextBox ID="txtProcessBys" runat="server" Width="720"></asp:TextBox><asp:Label ID="viewProcessBys" runat="server" Text="" Visible="false"></asp:Label>
                 </td>
             </tr>
         </table>

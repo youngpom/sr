@@ -59,11 +59,11 @@ public partial class tasklista : common
         if (txtEndTime.Text == "")
             txtEndTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(DateTime.Now.Year + "-12-31"));
 
-        if (IsAdmin() == false)
+       /* if (IsAdmin() == false)
         {
             chkMyData.Checked = true;
             chkMyData.Enabled = false;
-        }
+        }*/
 		
 
 
@@ -491,7 +491,9 @@ public partial class tasklista : common
     {
         string userID = string.Empty;
 
-        userID = Request.Cookies["UserSettings"]["USERID"];
+		 userID = "ian7617";
+           
+
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Cells[8].Style["height"] = "40px";
@@ -553,17 +555,17 @@ public partial class tasklista : common
             }
 
 			
-			// if (IsAdmin() == true || e.Row.Cells[26].Text == userID || e.Row.Cells[27].Text == userID || e.Row.Cells[22].Text == userID )
-           // {
-                //e.Row.Attributes["onClick"] = "document.location.href=\"writeTask.aspx?taskID=" + e.Row.Cells[0].Text + "\"";
-             //   e.Row.Attributes["onClick"] = "javascript: openTask('edit'," + e.Row.Cells[0].Text + ");";
-            //}
-           // else
-            //{
-                //e.Row.Attributes["onClick"] = "document.location.href=\"writeTask.aspx?MODE=view&taskID=" + e.Row.Cells[0].Text + "\"";
-               //  e.Row.Attributes["onClick"] = "javascript: openTask('view'," + e.Row.Cells[0].Text + ");";
+			 if (IsAdmin() == true || e.Row.Cells[26].Text == userID || e.Row.Cells[27].Text == userID || e.Row.Cells[22].Text == userID )
+          {
+               e.Row.Attributes["onClick"] = "document.location.href=\"writeTask.aspx?taskID=" + e.Row.Cells[0].Text + "\"";
+               e.Row.Attributes["onClick"] = "javascript: openTask('edit'," + e.Row.Cells[0].Text + ");";
+            }
+            else
+            {
+              e.Row.Attributes["onClick"] = "document.location.href=\"writeTask.aspx?MODE=view&taskID=" + e.Row.Cells[0].Text + "\"";
+              e.Row.Attributes["onClick"] = "javascript: openTask('view'," + e.Row.Cells[0].Text + ");";
 			  // e.Row.Attributes["onClick"] = "javascript:
-            //}
+            }
             e.Row.Attributes["onMouseover"] = "this.className='trMouseOver';";
             e.Row.Attributes["onMouseout"] = "this.className='trMouseOut';";
 			
@@ -757,5 +759,4 @@ public partial class tasklista : common
     {
         //Session["PAGESIZE"] = cboPageSize.Items[cboPageSize.SelectedIndex].Value;
     }
- 
 }

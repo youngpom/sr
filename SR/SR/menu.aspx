@@ -29,7 +29,7 @@
 
         <tr><td>
         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/writeTask.aspx" 
-            Target="main">■  단위업무 관리</asp:HyperLink>
+            Target="main">■  전산요청 등록</asp:HyperLink>
           <br /><br/><br/>
         </td></tr> <tr><td >
         <br />
@@ -37,7 +37,7 @@
 
         <tr><td >
         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/readTask.aspx" 
-            Target="main">■  단위업무 목록</asp:HyperLink>
+            Target="main">■  전산요청 확인</asp:HyperLink>
         <br /><br/><br/>
         </td></tr> <tr><td >
         <br />

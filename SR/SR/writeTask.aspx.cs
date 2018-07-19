@@ -183,6 +183,7 @@ public partial class teskedit : common
             {
                 makeSelectList(cboTaskStep, taskstepdt, "comcdnm", "comcd");
             }
+
             reqtypedt.Clear();
             reqtypedt.Dispose();
            
@@ -459,9 +460,16 @@ public partial class teskedit : common
         {
             ClientScript.RegisterStartupScript(this.GetType(), "MyScript", "<script language='javascript'>alert('구분 항목을 입력하여 주십시오.')</script>");
         }
+        else if (txtRequestContent.Text == string.Empty)        // 제목 필수 입력 처리
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "MyScript", "<script language='javascript'>alert('제목을 입력하여 주십시오.')</script>");
+        }
+        else if (hdnRequestDept.Value == string.Empty)        // 요청부서 필수 입력 처리
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "MyScript", "<script language='javascript'>alert('요청부서를 검색 후 입력하여 주십시오.')</script>");
+        }
         else
         {
-
             // 문서번호가 없으면 현재시간으로 문서번호 생성
             if (txtDocNo.Text == string.Empty)
                 txtDocNo.Text = DateTime.Now.ToString("yyyy-HHmmss");
@@ -545,7 +553,7 @@ public partial class teskedit : common
         endExpectDate = txtEndExpectDate.Text; //종료예정일
         startDate = txtStartDate.Text; //시작일
         endDate = txtEndDate.Text; //종료일
-        prcessContent = txtPrcoessContent.Text; //처리사항
+        prcessContent = txtPrcoessContent.Text + "\n [ " + DateTime.Now.ToString("yy-MM-dd HH:mm") + " ]"; //처리사항
         prcessFile = uploadPrcoessContent.FileName; //원본파일명(처리사항)
         prcessRealFile = saveFile(uploadPrcoessContent, "P"); //저장파일명(처리사항)
         processBys = txtProcessBys.Text; //처리관련자
@@ -964,6 +972,9 @@ public partial class teskedit : common
 
                // sql = sql + " , '" + prcessContent.Trim().Replace("'", "™") + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE(),
                //'"+requestContent1.Trim().Replace("'", "™")+@" ',' " +abcd    FROM PJT_TASK;";
+                                
+
+
 		
 		cmd.CommandType = CommandType.Text;
                 //Response.Write(sql);

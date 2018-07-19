@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SR(1)", "SR\", "{2A3E84D1-B6CC-400F-9E77-C6AC8E7C510B}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SR", "SR\", "{2A3E84D1-B6CC-400F-9E77-C6AC8E7C510B}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_56437"

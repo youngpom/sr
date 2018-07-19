@@ -53,6 +53,7 @@ public partial class tasklista : common
         string sysnm = string.Empty;
         string search_reqcontent = string.Empty;
         string search_reqrmk = string.Empty;
+        string reqemps = string.Empty;
 
         if (txtStartTime.Text == "")
             //txtStartTime.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(DateTime.Now.Year + "-01-01"));
@@ -137,6 +138,7 @@ public partial class tasklista : common
                 hdnRequestDept.Value = Request["hdnRequestDept"];
                 txtRequestDept.Text = Request["hdnRequestDeptName"];
                 hdnRequestBy.Value = Request["hdnRequestBy"];
+                //txtRequestBys.Text = Request["hdnRequestBys"];
                 txtRequestBy.Text = Request["hdnRequestByName"];
                 chkMyData.Checked = bool.Parse(Request["hdnMyData"]);
                 chkIngData.Checked = bool.Parse(Request["hdnIngData"]);
@@ -167,6 +169,7 @@ public partial class tasklista : common
             sysnm = cboGnlSystemName.Items[cboGnlSystemName.SelectedIndex].Value;
             search_reqcontent = txtSearchReqContent.Text;
             search_reqrmk = txtSearchReqRmk.Text;
+            reqemps = txtRequestBys.Text;
 
             //Response.Write(Request["PROGRAMCOPY"]);
             programcopy = Request["PROGRAMCOPY"];
@@ -181,11 +184,11 @@ public partial class tasklista : common
 			
             listTask.PageIndex = paging;
 
-            MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk, search_reqcontent);
+            MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk, search_reqcontent,reqemps);
         }
     }
 
-    public void MakeGridview(string developer, string reqdept, string taskstep, string requser, string startdate, string enddate, bool mydata, bool ingdata, string rcptemp, string devrmk, string gubun_1, string docno,bool imtdata,string programcopy,bool radioall,bool radiofirst,bool radiocom, bool radioadd,string userid,string sysnm,string search_reqrmk,string search_reqcontent)
+    public void MakeGridview(string developer, string reqdept, string taskstep, string requser, string startdate, string enddate, bool mydata, bool ingdata, string rcptemp, string devrmk, string gubun_1, string docno,bool imtdata,string programcopy,bool radioall,bool radiofirst,bool radiocom, bool radioadd,string userid,string sysnm,string search_reqrmk,string search_reqcontent, string reqemps)
     {
         string sql = @"SELECT TASKSEQ , TASKID,docno as DOCNO, TASKSTEP_COMCD.COMCDNM as TASKSTEP, REQTYPE_COMCD.COMCDNM as REQTYPE, REQTOOL_COMCD.COMCDNM as REQTOOL
                             , REQDT, REQDEPT_COMCD.COMCDNM as REQDEPTNM,  REQRMK, REQEMP, RCPEMP_DEVEMP.DEVEMPNM as RCPEMPNM
@@ -274,6 +277,10 @@ public partial class tasklista : common
         if (gubun_1 != "" && gubun_1 != "전체")
             sql = sql + " and PJT_TASK.DOTYPE = '" + gubun_1 + "'";
 
+        // 전산담당자 이름으로 검색
+        if (reqemps != "")
+            sql = sql + " and PJT_TASK.REQEMPS like '%" + reqemps + "%'";
+
         // 문서번호
         if (docno != "")
             sql = sql + " and PJT_TASK.DOCNO like '%" + docno + "'";
@@ -297,7 +304,7 @@ public partial class tasklista : common
         if (IsAdmin() == false)
             sql = sql + "and SYSNM_COMCD.COMCD = '501'";
 
-        sql = sql + "  ORDER BY REQDT DESC";
+        sql = sql + "  ORDER BY REGDT DESC";
 		
 		//string sql1 = 
         //Response.Write(sql);
@@ -377,7 +384,9 @@ public partial class tasklista : common
             e.Row.Cells[10].Width = Unit.Parse("60");
             
 
-            e.Row.Cells[11].Visible = false; //요청관련자
+            e.Row.Cells[11].Text = "전산담당자"; //전산 담당자
+            e.Row.Cells[11].Width = Unit.Parse("100");
+
             e.Row.Cells[12].Visible = false; //완료요청일
             e.Row.Cells[13].Visible = false; //진척률
 			
@@ -434,7 +443,7 @@ public partial class tasklista : common
             e.Row.Cells[4].Visible = false;//요청유형
             e.Row.Cells[5].Visible = false;//요청방식
             e.Row.Cells[9].Visible = false; //요청자
-            e.Row.Cells[11].Visible = false; //요청관련자
+//            e.Row.Cells[11].Visible = false; //요청관련자
             e.Row.Cells[12].Visible = false; //완료요청일
             e.Row.Cells[13].Visible = false; //진척률
             e.Row.Cells[15].Visible = false; //시작예정일
@@ -509,7 +518,12 @@ public partial class tasklista : common
                 e.Row.Cells[1].Style["color"] = "black";
             }
 
-            //내가 접수자이거나 처리자인경우 해당 셀 스타일 조정
+            //내가 전산담당자이거나 접수자이거나 처리자인경우 해당 셀 스타일 조정
+            if (e.Row.Cells[11].Text == userID)
+            {
+                e.Row.Cells[11].Style["font-weight"] = "bold";
+                e.Row.Cells[11].Style["color"] = "black";
+            }
             if (e.Row.Cells[26].Text == userID)
             {
                 //e.Row.Cells[10].Style["background-color"] = "LightGray";
@@ -542,6 +556,7 @@ public partial class tasklista : common
             e.Row.Cells[3].Text = "<center>" + e.Row.Cells[3].Text + "</center>";
             e.Row.Cells[6].Text = "<center>" + e.Row.Cells[6].Text + "</center>";
             e.Row.Cells[10].Text = "<center>" + e.Row.Cells[10].Text + "</center>";
+            e.Row.Cells[11].Text = "<center>" + e.Row.Cells[11].Text + "</center>";
             e.Row.Cells[14].Text = "<center>" + e.Row.Cells[14].Text + "</center>";
             e.Row.Cells[17].Text = "<center>" + e.Row.Cells[17].Text + "</center>";
             e.Row.Cells[19].Text = "<center>" + e.Row.Cells[19].Text + "</center>";
@@ -566,6 +581,7 @@ public partial class tasklista : common
         string sysnm = string.Empty;
         string search_reqrmk = string.Empty;
         string search_reqcontent = string.Empty;
+        string reqemps = string.Empty;
 
         bool mydata = false;
         bool ingdata = false;
@@ -638,8 +654,9 @@ public partial class tasklista : common
         sysnm = cboGnlSystemName.Items[cboGnlSystemName.SelectedIndex].Value;
         search_reqrmk = txtSearchReqRmk.Text;
         search_reqcontent = txtSearchReqContent.Text;
+        reqemps = txtRequestBys.Text;
 
-        MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk,search_reqcontent);
+        MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk,search_reqcontent,reqemps);
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
@@ -669,6 +686,7 @@ public partial class tasklista : common
         string sysnm = string.Empty;
         string search_reqrmk = string.Empty;
         string search_reqcontent = string.Empty;
+        string reqemps = string.Empty;
 
         developer = cboDeveloper.Items[cboDeveloper.SelectedIndex].Value;
         reqdept = hdnRequestDept.Value;
@@ -676,7 +694,8 @@ public partial class tasklista : common
         sysnm = cboGnlSystemName.Items[cboGnlSystemName.SelectedIndex].Value;
         search_reqrmk = txtSearchReqRmk.Text;
         search_reqcontent = txtSearchReqContent.Text;
-        
+        reqemps = txtRequestBys.Text;
+
         //   reqtool = cboReqTool.Items[cboReqTool.SelectedIndex].Value;
         gubun_1 = cboGubun_1.Items[cboGubun_1.SelectedIndex].Value;
         requser = hdnRequestBy.Value;
@@ -730,7 +749,7 @@ public partial class tasklista : common
 		//Response.Write("Qewqwqew" + programcopy);
 		//programcopy =Request["PROGRAMCOPY"];  //Request["hdnIpt"];
 		
-        MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk,search_reqcontent);
+        MakeGridview(developer, reqdept, taskstep, requser, startdate, enddate, mydata, ingdata, rcptemp, devrmk, gubun_1, docno,imtdata,programcopy,radioall,radiofirst,radiocom,radioadd,userid,sysnm,search_reqrmk,search_reqcontent,reqemps);
     }
 
     protected void cboPageSize_SelectedIndexChanged(object sender, EventArgs e)

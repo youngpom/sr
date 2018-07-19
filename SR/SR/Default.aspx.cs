@@ -22,11 +22,11 @@ public partial class _Default : common
             }
 
             //default페이지를 새로 열었을때 쿠키가 살아 있으면 다음 페이지로 자동 이동한다.
-            if (Request.Cookies["UserSettings"] != null && Request.Cookies["UserSettings"]["USERID"] != null)
-            {
-                Response.Redirect("frame.aspx");
-                //HttpContext.Current.Response.Write("<script>document.location ='./frame.aspx'</script>");
-            }
+          //  if (Request.Cookies["UserSettings"] != null && Request.Cookies["UserSettings"]["USERID"] != null)
+          //  {
+            //    Response.Redirect("frame.aspx");
+             //  // HttpContext.Current.Response.Write("<script>document.location ='./frame.aspx'</script>");
+           // }
         }
     }
 

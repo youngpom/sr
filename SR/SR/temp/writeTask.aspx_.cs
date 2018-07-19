@@ -8,6 +8,7 @@ using System.Data;
 using System.Configuration;
 using System.Data.OleDb;
 using System.IO;
+using System.Data.SqlClient;
 
 public partial class teskedit : common
 {
@@ -36,11 +37,31 @@ public partial class teskedit : common
             searchMODE.Value = Request["MODE"];
             searchTargetPage.Value = Request["hdnTargetPage"];
 
-            txtRequestDate.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
+            //get방식으로 받아서 입력하기
+            txtDocNo.Text = Request["txtDocNo"];
+            txtRequestDate.Text = Request["txtRequestDate"];
+            txtRequestDept.Text = Request["txtRequestDept"];
+            txtRequestBy.Text = Request["txtRequestBy"];
+            txtReceiptBy.Text = Request["txtReceiptBy"];
+            txtRequestBys.Text = Request["txtRequestBys"];
+            txtRequestDueDate.Text = Request["txtRequestDueDate"];
+            txtRequestContent.Text = Request["txtRequestContent"];
+            String tempSystemName = Request["cboGnlSystemName"];
+            String tempReqTool = Request["cboGnlReqTool"];
+            String tempReqType = Request["cboGnlReqType"];
+
+
+            if (txtRequestDate.Text == "")
+            {
+                txtRequestDate.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
+            }
             txtReceiptBy.Text = Request.Cookies["UserSettings"]["USERNM"];
             hdnReceiptBy.Value = Request.Cookies["UserSettings"]["USERID"];
-            txtRequestDueDate.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
-            
+            if (txtRequestDueDate.Text == "")
+            {
+                txtRequestDueDate.Text = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
+            }
+
             //처리완료시 처리자에 현재세션사용자 자동입력위한 기초값 히든셋팅
             hdnLoginNm.Value = Request.Cookies["UserSettings"]["USERNM"];
             hdnLoginId.Value = Request.Cookies["UserSettings"]["USERID"];
@@ -106,10 +127,10 @@ public partial class teskedit : common
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
                 // Connect to the database and run the query.
-                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    OleDbCommand cmd = new OleDbCommand();
+                    SqlCommand cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
 
@@ -129,7 +150,7 @@ public partial class teskedit : common
                     //Response.Write(tasksql);
                     //Response.End();
                     cmd.CommandText = tasksql;
-                    OleDbDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.Read())
                     {
@@ -183,7 +204,8 @@ public partial class teskedit : common
                         txtProcessBys.Text = reader["DEVEMPS"].ToString(); //처리관련자
                         viewProcessBys.Text = reader["DEVEMPS"].ToString(); //처리관련자
 
-                        if (!string.IsNullOrEmpty(Request["MODE"]) && Request["MODE"] == "view")
+                         //if (!string.IsNullOrEmpty(Request["MODE"]) && Request["MODE"] == "view")
+                        if (!string.IsNullOrEmpty(Request["MODE"]) && Request["MODE"] == "view" && 1==2)
                         {
                             cboGnlSystemName.Visible = false;
                             viewGnlSystemName.Visible = true; //시스템명
@@ -250,21 +272,35 @@ public partial class teskedit : common
                             chkRequestFileName.Visible = false;
 
                         }
+			else if(!string.IsNullOrEmpty(Request["MODE"]) && Request["MODE"] == "view" )
+                        //else if(USERLVL.Equals('1'))
+                        { // MCCC
+                             
+                            btnSave.Text = "수정";
+                            btnDelete.Visible = false;
+                        }
+			else if(!string.IsNullOrEmpty(Request["MODE"]) && Request["MODE"] != "view" )
+                        //else if(USERLVL.Equals('1'))
+                        {  // 관리자
+                             
+                            btnSave.Text = "수정";
+                            btnDelete.Visible = true;
+                        }
                         else
                         {
                             btnSave.Text = "수정";
-                            btnDelete.Visible = true;
+                            btnDelete.Visible = false;
                         }
                     }
                     reader.Dispose();
                     reader.Close();
                     cmd.Dispose();
 
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
 
-                    string attachsql = @"SELECT CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT 
+                    string attachsql = @"SELECT CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT , PROFILENM , PPROFILENM
                                            FROM PJT_ATTFILE
                                           WHERE CONTABLE = 'PJT_TASK' AND CONSEQ = '" + Request["taskID"].ToString() + "'";
                     cmd.CommandText = attachsql;
@@ -273,15 +309,15 @@ public partial class teskedit : common
                     {
                         while (reader.Read())
                         {
-                            if(reader["SAFILENM"].ToString() != "" && reader["SAFILENM"].ToString().Substring(0,2) == "R_")
+                            if (reader["SAFILENM"].ToString() != "" && reader["SAFILENM"].ToString().Substring(0, 2) == "R_")
                             {
-                                lblRequestFileName.Text = "<a href=\"downloadFile.aspx?originname=" + HttpUtility.UrlEncode(reader["ORFILENM"].ToString()) + "&savename=" + HttpUtility.UrlEncode(reader["SAFILENM"].ToString()) + "\" target=\"_new\" class=\"link\">" + reader["ORFILENM"].ToString() + "</a>";
+                                lblRequestFileName.Text = "<a href=\"downloadFile.aspx?regdt=" + reader["REGDT"].ToString().Substring(0, 4) + "&originname=" + HttpUtility.UrlEncode(reader["ORFILENM"].ToString()) + "&savename=" + HttpUtility.UrlEncode(reader["SAFILENM"].ToString()) + "\" target=\"_new\" class=\"link\">" + reader["PROFILENM"].ToString() + "</a>";
                                 hdnRequestFileRealName.Value = reader["SAFILENM"].ToString();
                             }
-                            else if (reader["SAFILENM"].ToString() != "" && reader["SAFILENM"].ToString().Substring(0, 2) == "P_")
+                            if (reader["PROFILENM"].ToString() != "" && reader["PPROFILENM"].ToString().Substring(0, 2) == "P_")
                             {
-                                lblProcessFileName.Text = "<a href=\"downloadFile.aspx?originname=" + HttpUtility.UrlEncode(reader["ORFILENM"].ToString()) + "&savename=" + HttpUtility.UrlEncode(reader["SAFILENM"].ToString()) + "\" target=\"_new\" class=\"link\">" + reader["ORFILENM"].ToString() + "</a>";
-                                hdnResponseFileRealName.Value = reader["SAFILENM"].ToString();
+                                lblProcessFileName.Text = "<a href=\"downloadFile.aspx?regdt=" + reader["REGDT"].ToString().Substring(0, 4) + "&originname=" + HttpUtility.UrlEncode(reader["ORFILENM"].ToString()) + "&savename=" + HttpUtility.UrlEncode(reader["PPROFILENM"].ToString()) + "\" target=\"_new\" class=\"link\">" + reader["PROFILENM"].ToString() + "</a>";
+                                hdnResponseFileRealName.Value = reader["PPROFILENM"].ToString();
                             }
                         }
                     }
@@ -292,9 +328,30 @@ public partial class teskedit : common
             }
             else
             {
-                cboGnlSystemName.SelectedIndex = 0;
-                cboGnlReqTool.SelectedIndex = 0;
-                cboGnlReqType.SelectedIndex = 0;
+                if (tempSystemName != "")
+                {
+                    cboGnlSystemName.SelectedIndex = Convert.ToInt32(tempSystemName);
+                }
+                else
+                {
+                    cboGnlSystemName.SelectedIndex = 0;
+                }
+                if (tempReqTool != "")
+                {
+                    cboGnlReqTool.SelectedIndex = Convert.ToInt32(tempReqTool);
+                }
+                else
+                {
+                    cboGnlReqTool.SelectedIndex = 0;
+                }
+                if (tempReqType != "")
+                {
+                    cboGnlReqType.SelectedIndex = Convert.ToInt32(tempReqType);
+                }
+                else
+                {
+                    cboGnlReqType.SelectedIndex = 0;
+                }
                 cboGubun.SelectedIndex = 0;
                 cboTaskStep.SelectedIndex = 0;
 
@@ -377,12 +434,12 @@ public partial class teskedit : common
         docno = txtDocNo.Text; //문서번호
 
         string connectionString = ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-        using(OleDbConnection conn = new OleDbConnection(connectionString))
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             string sql = string.Empty;
             string attachsql = string.Empty;
 
-            OleDbCommand cmd = new OleDbCommand();
+            SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
             conn.Open();
             if (!string.IsNullOrEmpty(taskID) && taskID.Trim() != "")
@@ -396,8 +453,8 @@ public partial class teskedit : common
                     sql = sql + ", REQDT = NULL";
                 else
                     sql = sql + ", REQDT = '" + requestDate + @"'";
-                sql = sql + @"
-		                         , REQDEPTSEQ = '" + requestDept + @"'";
+
+                sql = sql + " , REQDEPTSEQ = '" + requestDept + @"'";
                 if (requestBy == "")
                     sql = sql + ", REQEMP = NULL";
                 else
@@ -407,7 +464,7 @@ public partial class teskedit : common
                 else
                     sql = sql + ", RCPTEMP = '" + receiptBy + @"'";
                 sql = sql + @"   , REQEMPS = '" + requestBys + @"'";
-                if(requestDueDate == "")
+                if (requestDueDate == "")
                     sql = sql + ", REQDUEDT = NULL";
                 else
                     sql = sql + ", REQDUEDT = '" + requestDueDate + @"'";
@@ -445,19 +502,19 @@ public partial class teskedit : common
 		                         , DEVRMK = '" + prcessContent.Trim().Replace("'", "™") + @"'
                                  , DOCNO  = '" + docno + @"'
 		                         , CHGEMP = '" + Request.Cookies["UserSettings"]["USERID"] + @"'
-		                         , CHGDT = CURRENT_TIMESTAMP
+		                         , CHGDT = GETDATE()
                          WHERE TASKID = '" + taskID + @"';";
                 //Response.Write(sql);
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = sql;
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
-                
-                //첨부파일목록을 수정해준다.
+
+           /*     //첨부파일목록을 수정해준다.
                 if (chkRequestFileName.Checked == true || !string.IsNullOrEmpty(requestFile) && requestFile != "")
                 {
                     deleteFile(hdnRequestFileRealName.Value);
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     string deletesql = "DELETE FROM PJT_ATTFILE WHERE CONTABLE = 'PJT_TASK' AND CONSEQ = '" + hdnTaskSeq.Value + "' AND SAFILENM like 'R_%'";
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
@@ -465,12 +522,14 @@ public partial class teskedit : common
                     cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
+             */
 
+            
                 //첨부파일목록을 수정해준다.
                 if (chkProcessFileName.Checked == true || !string.IsNullOrEmpty(prcessFile) && prcessFile != "")
                 {
                     deleteFile(hdnResponseFileRealName.Value);
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     string deletesql = "DELETE FROM PJT_ATTFILE WHERE CONTABLE = 'PJT_TASK' AND CONSEQ = '" + hdnTaskSeq.Value + "' AND SAFILENM like 'P_%'";
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
@@ -484,9 +543,9 @@ public partial class teskedit : common
                 {
                     attachsql = @"INSERT INTO PJT_ATTFILE
                                      (CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT) 
-                              SELECT 'PJT_TASK', TASKSEQ, 0, '" + requestFile + @"', '" + requestRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM PJT_TASK WHERE TASKSEQ = '" + hdnTaskSeq.Value + @"';";
+                              SELECT 'PJT_TASK', TASKSEQ, 0, '" + requestFile + @"', '" + requestRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE() FROM PJT_TASK WHERE TASKSEQ = '" + hdnTaskSeq.Value + @"';";
                     cmd.Dispose();
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = attachsql;
@@ -496,11 +555,12 @@ public partial class teskedit : common
 
                 if (!string.IsNullOrEmpty(prcessFile) && prcessFile != "")
                 {
-                    attachsql = @"INSERT INTO PJT_ATTFILE
+                   attachsql = @"INSERT INTO PJT_ATTFILE
                                      (CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT) 
-                              SELECT 'PJT_TASK', TASKSEQ, 1, '" + prcessFile + @"', '" + prcessRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM PJT_TASK WHERE TASKSEQ = '" + hdnTaskSeq.Value + @"';";
+                              SELECT 'PJT_TASK', TASKSEQ, 1, '" + requestFile + @"', '" + requestRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE() FROM PJT_TASK WHERE TASKSEQ = '" + hdnTaskSeq.Value + @"';";
+                    
                     cmd.Dispose();
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = attachsql;
@@ -517,13 +577,13 @@ public partial class teskedit : common
                                                    , SYSNM, REQTYPE, REQTOOL, REQDT, REQDEPTSEQ, REQEMP, RCPTEMP, REQEMPS, REQDUEDT, REQRMK 
                                                    , DOTYPE, DEVEMP, DEVEMPS, TASKSTEP, TASKPROG, STEXDT, STDT, SPEXDT, SPDT, DOCNO, DEVRMK
                                                    , REGEMP, CHGEMP, REGDT, CHGDT) 
-                        SELECT CONCAT('" + DateTime.Now.Year.ToString() + @"-',RIGHT(TRIM(CONCAT('000',char(COALESCE(RIGHT(MAX(TASKID),4) + 1,1)))),4))
+                      SELECT '" + DateTime.Now.Year.ToString() + @"-' +RIGHT(RTRIM(LTRIM('000'+COALESCE(RIGHT(MAX(TASKID),4) + 1,1))),4)
                                , '" + system + @"', '" + requestType + @"', '" + requestTool + @"'";
                 if (requestDate == "")
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + requestDate + "'";
-               
+
                 sql = sql + ", '" + requestDept + @"'";
 
                 if (requestBy == "")
@@ -544,22 +604,22 @@ public partial class teskedit : common
 
                 sql = sql + ", '" + requestContent.Trim().Replace("'", "™") + @"'
                                , '" + gubun + @"', '" + processBy + @"', '" + processBys + @"', '" + taskstep + @"', '" + taskProgress + "'";
-                if(startExpectDate == "")
+                if (startExpectDate == "")
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + startExpectDate + "'";
 
-                if(startDate == "")
+                if (startDate == "")
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + startDate + "'";
 
-                if(endExpectDate == "")
+                if (endExpectDate == "")
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + endExpectDate + "'";
 
-                if(endDate == "")
+                if (endDate == "")
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + endDate + "'";
@@ -568,9 +628,9 @@ public partial class teskedit : common
                     sql = sql + " , " + "NULL";
                 else
                     sql = sql + " , " + "'" + docno + "'";
-                
+
                 sql = sql + " , '" + prcessContent.Trim().Replace("'", "™") + @"'
-                               , '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM PJT_TASK;";
+                               , '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE() FROM PJT_TASK;";
                 cmd.CommandType = CommandType.Text;
                 //Response.Write(sql);
                 //Response.End();
@@ -583,9 +643,9 @@ public partial class teskedit : common
                 {
                     attachsql = @"INSERT INTO PJT_ATTFILE
                                      (CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT) 
-                              SELECT 'PJT_TASK', MAX(TASKSEQ), 0, '" + requestFile + @"', '" + requestRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM PJT_TASK WHERE REGEMP = '" + Request.Cookies["UserSettings"]["USERID"] + @"' AND REQRMK = '" + requestContent.Trim() + @"';";
+                              SELECT 'PJT_TASK', MAX(TASKSEQ), 0, '" + requestFile + @"', '" + requestRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE() FROM PJT_TASK WHERE REGEMP = '" + Request.Cookies["UserSettings"]["USERID"] + @"' AND REQRMK = '" + requestContent.Trim() + @"';";
                     cmd.Dispose();
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = attachsql;
@@ -597,9 +657,9 @@ public partial class teskedit : common
                 {
                     attachsql = @"INSERT INTO PJT_ATTFILE
                                      (CONTABLE, CONSEQ, ATTSEQ, ORFILENM, SAFILENM, REGEMP, CHGEMP, REGDT, CHGDT) 
-                              SELECT 'PJT_TASK', MAX(TASKSEQ), 1, '" + prcessFile + @"', '" + prcessRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM PJT_TASK WHERE REGEMP = '" + Request.Cookies["UserSettings"]["USERID"] + @"' AND REQRMK = '" + requestContent.Trim() + @"';";
+                              SELECT 'PJT_TASK', MAX(TASKSEQ), 1, '" + prcessFile + @"', '" + prcessRealFile + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', '" + Request.Cookies["UserSettings"]["USERID"] + @"', GETDATE(), GETDATE() FROM PJT_TASK WHERE REGEMP = '" + Request.Cookies["UserSettings"]["USERID"] + @"' AND REQRMK = '" + requestContent.Trim() + @"';";
                     cmd.Dispose();
-                    cmd = new OleDbCommand();
+                    cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = attachsql;
@@ -646,7 +706,7 @@ public partial class teskedit : common
             }
             return realname;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return "error:" + ex.Message;
         }
@@ -691,9 +751,9 @@ public partial class teskedit : common
                          where TASKSEQ = '" + taskSeq + "'";
 
         //이게 insert인지 update건인지 확인해서 처리
-        OleDbConnection conn = new OleDbConnection(connectionString);
+        SqlConnection conn = new SqlConnection(connectionString);
         conn.Open();
-        OleDbCommand cmd = new OleDbCommand();
+        SqlCommand cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = querystring;
@@ -709,7 +769,7 @@ public partial class teskedit : common
             deleteFile(responseFileRealName);
 
         string attachsql = "delete from PJT_ATTFILE where CONTABLE = 'PJT_TASK' AND CONSEQ = '" + taskSeq + "'";
-        cmd = new OleDbCommand();
+        cmd = new SqlCommand();
         cmd.Connection = conn;
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = querystring;

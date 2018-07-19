@@ -1,0 +1,228 @@
+﻿body 
+{
+	font-size: 9pt;
+    COLOR: #505050;
+	font-family: ""굴림",Gulim,돋움",Dotum,AppleGothic,Sans-serif;
+}
+
+INPUT.text
+{
+	font-size: 12px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 4px;
+	height:16px;
+	border: solid 1px #CFCFCF;
+}
+
+.btn_search
+{
+    BACKGROUND-IMAGE: url(./image/button_rec.GIF);
+    FONT-WEIGHT: bold;
+    COLOR: #505050;
+	padding-top: 5px;
+    height: 22px;
+    width: 53px;
+    border:0;
+	text-align: center;
+    vertical-align:bottom;
+}
+.listTable table
+{
+
+}
+.listTable th
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+	font-weight: bold;
+	background-color: #cedab5;
+	height: 25px;
+	border-top: solid 1px #84af4c;
+	border-bottom: solid 1px #84af4c;
+	border-left: solid 1px #bccc9d;
+	border-right: solid 1px #bccc9d;
+	color: #666666;
+}
+
+.listTable td
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: left;
+	font-weight: normal;
+	border-top: solid 1px #84af4c;
+	border-bottom: solid 1px #84af4c;
+	border-left: solid 1px #bccc9d;
+	border-right: solid 1px #bccc9d;
+	height: 25px;
+}
+
+.trMouseOver
+{
+	cursor:hand;
+	background-color:#a4c177
+;
+}
+
+.trMouseOut
+{
+	cursor:normal;
+	background-color:#FFFFFF;
+}
+
+.bullet_title
+{
+    BACKGROUND-IMAGE: url(./image/dot_bullet.GIF);
+    BACKGROUND-REPEAT: no-repeat;
+    MARGIN-TOP: 5px;
+    PADDING-TOP: 4px;    
+    PADDING-LEFT: 25px;
+    PADDING-BOTTOM: 15px;
+    COLOR: #1571bc;
+    CLEAR: both;
+    FONT-SIZE: 15px;
+    FONT-WEIGHT: bold;
+    TEXT-DECORATION: none;
+}
+
+.action_table
+{
+	border: solid 1px #eae0ba;
+    vertical-align: middle;
+    border-spacing:0px;
+    border:1;
+    border-collapse:collapse;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+.action_td_lbl_base
+{
+	background-color: #ebe2b3;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    FONT-WEIGHT: bold;
+    height:23px;
+    COLOR: #505050;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568
+;
+}
+.action_td_lbl
+{
+    BACKGROUND-IMAGE: url(./image/dot_gold.GIF);
+	background-color: #ebe2b3;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    FONT-WEIGHT: bold;
+    height:23px;
+    COLOR: #505050;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568
+;
+}
+
+.action_td_in
+{
+	background-color: #ebe4ce;
+    BACKGROUND-REPEAT: no-repeat;
+    PADDING-LEFT: 15px;
+    height: 23px;
+    vertical-align: middle;
+    TEXT-DECORATION: none;
+    border: solid 1px #dcb568
+;
+}
+
+.button_table
+{	
+	background-color: #ebe5df;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+	font-weight: bold;
+    border-spacing:0px;
+    border-collapse:collapse;
+	border: solid 1px #ebe5df;
+	height: 25px;
+}
+
+.result_table
+{
+	border: solid 1px #bccc9d;
+    vertical-align: middle;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+
+.menuTable
+{
+    COLOR: #FFFFFF;
+	padding-bottom: 10px;
+    MARGIN-bottom: 10px;
+}
+A
+{
+	font-family: "굴림",Gulim,AppleGothic,Sans-serif;
+	LINE-HEIGHT: 150%;
+    COLOR: #CC6699;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR:#66FF33;
+	LINE-HEIGHT: 150%;
+    TEXT-DECORATION: underline
+}
+A:focus
+{
+    COLOR:#66FF33;
+	LINE-HEIGHT: 150%;
+    TEXT-DECORATION: underline
+}
+
+.textbold
+{
+	font-size: 12px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 4px;
+	height:16px;
+	border: solid 1px #CFCFCF;
+	font-weight: bold;
+	color: Blue;
+}

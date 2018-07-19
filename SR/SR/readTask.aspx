@@ -55,7 +55,7 @@
             document.forms["writeform"].submit();
         }
     </script>
-    <title>단위업무 조회(목록)</title>
+    <title>전산요청 조회(목록)</title>
 </head>
 <body>
 
@@ -65,7 +65,7 @@
         </asp:ToolkitScriptManager>
         <br />
         <div class="bullet_title">
-            단위업무 목록
+            전산요청 확인
         </div>
         <table class="action_table">
             <tr>
@@ -113,8 +113,8 @@
                 </td>
                 <td class="action_td_lbl" width="100px">
                     <asp:Label ID="lblDocNo" runat="server" Text="문서번호"></asp:Label></td>
-                <td class="action_td_in" width="200px">
-                    <asp:TextBox ID="txtDocNo" runat="server" Width="100px"></asp:TextBox>
+                <td class="action_td_in" width="285px">
+                    <asp:TextBox ID="txtDocNo" runat="server" Width="200px"></asp:TextBox>
                     ex) 0123 </td>
             </tr>
             <tr>
@@ -148,10 +148,10 @@
                     <asp:HiddenField ID="hdnRequestBy" runat="server" />
                 </td>
                 <td class="action_td_lbl" width="100px">
-                    <asp:Label ID="lblDevrmk" runat="server" Text="처리내용"></asp:Label>
+                    <asp:Label ID="lblRequestBys" runat="server" Text="전산담당자"></asp:Label>
                 </td>
                 <td class="action_td_in" width="200px">
-                    <asp:TextBox ID="txtDevrmk" runat="server" Width="100px"></asp:TextBox>
+                    <asp:TextBox ID="txtRequestBys" runat="server"></asp:TextBox>
                 </td>
                 <td class="action_td_lbl" width="100px">
                     <asp:Label ID="lblIngData" runat="server" Text="미처리내역"></asp:Label>
@@ -164,25 +164,11 @@
                 <td width="100px" class="action_td_lbl">
                     <asp:Label ID="lblTaskStep1" runat="server" Text="조  건"></asp:Label>
                 </td>
-                <td width="200px" class="action_td_in">
+                <td width="200px" class="action_td_in" colspan="5">
                     <asp:RadioButton ID="AllReq" runat="server" GroupName="select" Width="140px" Text="전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;체"></asp:RadioButton>
                     <asp:RadioButton ID="FirstReq" runat="server" GroupName="select" Width="140px" Text="최초요구"></asp:RadioButton>
                     <asp:RadioButton ID="ComReq" runat="server" GroupName="select" Width="140px" Text="전산요청"></asp:RadioButton>
                     <asp:RadioButton ID="AddReq" runat="server" GroupName="select" Width="140px" Text="추가요구"></asp:RadioButton>
-                </td>
-                <td width="100px" class="action_td_lbl">
-                    <asp:Label ID="lbnReqTool2" runat="server" Text="적용 프로그램"></asp:Label>
-                </td>
-                <td width="200px" class="action_td_in">
-                    <asp:TextBox ID="txtProgramcopy" runat="server" Text="" Width="170px"></asp:TextBox>
-                </td>
-
-                <td width="100px" class="action_td_lbl">
-                    <asp:Label ID="lbnReqTool1" runat="server" Style="text-align: center" ForeColor="Red" Text="긴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp급<br/>(환자에게<br/>직접영향)"></asp:Label>
-                </td>
-                <td width="200px" class="action_td_in">
-                    <asp:CheckBox ID="chkImPorTant" runat="server" Text="" Width="50"></asp:CheckBox>
-                    <asp:HiddenField ID="hdnImt" runat="server" />
                 </td>
             </tr>
             <tr>
@@ -195,6 +181,23 @@
                     </asp:DropDownList>
                 </td>
                 <td width="100px" class="action_td_lbl">
+                    <asp:Label ID="lbnReqTool2" runat="server" Text="적용 프로그램"></asp:Label>
+                </td>
+                <td width="200px" class="action_td_in">
+                    <asp:TextBox ID="txtProgramcopy" runat="server" Text="" Width="170px"></asp:TextBox>
+                </td>
+
+                <td width="100px" class="action_td_lbl">
+                    <asp:Label ID="lbnReqTool1" runat="server" Style="text-align: center" ForeColor="Red" Text="긴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp급"></asp:Label>
+                </td>
+                <td width="200px" class="action_td_in">
+                    <asp:CheckBox ID="chkImPorTant" runat="server" Text="" Width="20"></asp:CheckBox>
+                    <asp:Label ID="Label1" runat="server" Style="text-align: center" ForeColor="Red" Text="(환자에게 직접영향)"></asp:Label>
+                    <asp:HiddenField ID="hdnImt" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td width="100px" class="action_td_lbl">
                     <asp:Label ID="lblSearchReqRmk" runat="server" Text="제목"></asp:Label>
                 </td>
                 <td class="action_td_in">
@@ -205,6 +208,12 @@
                 </td>
                 <td class="action_td_in">
                     <asp:TextBox ID="txtSearchReqContent" runat="server" Width="170px"></asp:TextBox>
+                </td>
+                <td class="action_td_lbl" width="100px">
+                    <asp:Label ID="lblDevrmk" runat="server" Text="처리내용"></asp:Label>
+                </td>
+                <td class="action_td_in" width="200px">
+                    <asp:TextBox ID="txtDevrmk" runat="server" Width="170px"></asp:TextBox>
                 </td>
             </tr>
 

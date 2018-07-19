@@ -50,7 +50,7 @@
 				
 				
 				
-            document.forms["writeform"].hdnRcptEmp.value = document.forms["form1"].txtRcptEmp.value;
+            document.forms["writeform"].hdnReqrmk.value = document.forms["form1"].txtReqrmk.value;
             document.forms["writeform"].hdnDevrmk.value = document.forms["form1"].txtDevrmk.value;
 			
 			
@@ -126,7 +126,11 @@
 		<br/><br/>
 		
 		
-            <asp:TextBox ID="txtRequestContent2" runat="server" width="1063" height="150"></asp:TextBox> 
+            <asp:TextBox ID="txtRequestContent2" runat="server" width="1063" height="150" Text="마약류통합관리시스템 연계프로그램 개발 관련 귀사(엠씨씨)의 일방적인 개발일정 통보에 관한 회신(제주한라병원)입니다.
+
+귀사(엠씨씨)의 계약불이행으로 인하여 타업체를 통해 마약류통합관리시스템 연계프로그램 개발진행 중에 있으므로
+
+임의로 프로그램을 설치,배포하는 일이 없도록 하여주시기 바랍니다."  TextMode="MultiLine" ReadOnly=true ></asp:TextBox> 
 			<asp:Label ID="viewRequestContent2" runat="server" Text="" Visible="false"></asp:Label>
 			
 			
@@ -280,7 +284,7 @@
         <input type="hidden" name="hdnRequestBy" value="" />
         <input type="hidden" name="hdnRequestByName" value="" />
         <input type="hidden" name="hdnMyData" value="" />
-        <input type="hidden" name="hdnRcptEmp" value="" />
+        <input type="hidden" name="hdnReqrmk" value="" />
         <input type="hidden" name="hdnDevrmk" value="" />
         <input type="hidden" name="hdnIngData" value="" />
         <input type="hidden" name="hdnPaging" value="" />

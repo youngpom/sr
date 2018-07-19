@@ -34,7 +34,7 @@
                 Halla & MCC Online Cooperation<br />
                 <br />
                     </td></tr>
-        <tr><td width="100px" align="right"><asp:Label ID="Label1" runat="server" Text="사  번 : "></asp:Label></td>
+        <tr><td width="100px" align="right"><asp:Label ID="Label1" runat="server" Text="아이디 : "></asp:Label></td>
             <td class="style1" ><asp:TextBox ID="TB_user" runat="server" Width="112px"></asp:TextBox></td></tr>
             <tr><td width="100px" align="right"><asp:Label ID="Label2" runat="server" Text="암  호 : "></asp:Label></td>
                    <td class="style1" >

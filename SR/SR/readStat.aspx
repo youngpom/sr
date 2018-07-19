@@ -11,7 +11,7 @@
     <script language='javascript' src="common.js" type="text/javascript"></script>
     <script language='javascript' type="text/javascript">
     </script>
-    <title>단위업무 조회(목록)</title>
+    <title>전산요청 조회(목록)</title>
 </head>
 <body>
     <form id="form1" runat="server">

@@ -254,9 +254,14 @@ public class common : System.Web.UI.Page
     /// <param name="valueField">value column명</param>
     public void makeSelectList(DropDownList cboList, DataTable dt, string textField, string valueField)
     {
+        ListItem oListItem;
         for (int i = 0; i < dt.Rows.Count; i++)
         {
-            ListItem oListItem = new ListItem(dt.Rows[i][textField].ToString(), dt.Rows[i][valueField].ToString());
+            oListItem = new ListItem(dt.Rows[i][textField].ToString(), dt.Rows[i][valueField].ToString());
+            if (dt.Rows[i][textField].ToString() == "처리완료" || dt.Rows[i][textField].ToString() == "완료")
+            {
+                oListItem.Attributes.Add("style", "color:red; font-weight:bold;");
+            }
             cboList.Items.Add(oListItem);
         }
     }
